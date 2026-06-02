@@ -5,8 +5,13 @@
      en el terminal :
 
     npm init -y
+    
+# 1.1.- Cuando descargamos el proyecto de otro lado:
+    Vamos a usar el siguiente comando para instalar dependencias de NodeMules
 
-# 2.- instalar Express
+    npm i 
+
+# 2.- instalar Express(para trabajar Javascript como servidor)
     -Realizar la instalacion de un paquete
      de desarrollo:
 
