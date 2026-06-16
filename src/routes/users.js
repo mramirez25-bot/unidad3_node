@@ -43,6 +43,21 @@ router.get('/', (req, res) => {
     res.json(users);
 });
 
+router.post(
+    '/', (req, res) => {
+
+        const {nombre, edad} = req.body;
+        const nuevoId = users.length > 0 ? users [users.length -1].id + 1 : 1;
+        const nuevoUsuario = {id: nuevoId, nombre, edad};
+        //hacemos uso del empujar
+        users.push(nuevoUsuario);
+
+        res.status(201).json(nuevoUsuario);
+        //{"nombre": "Maria", "edad":25}
+    }
+);
+
+
 // GET /usuario/:id - obtener uno por id / select * from users where id = 1
 
 router.get('/:id', (req, res) =>{
@@ -57,6 +72,7 @@ router.get('/:id', (req, res) =>{
     res.json(user);
 });
 
+ HEAD
 router.post('/', (req, res) => {
   const { nombre, edad } = req.body;
 
@@ -96,3 +112,30 @@ router.delete('/:id' , (req, res) => {
 
 
 module.exports = router;
+
+// PUT /:id con esta ruta podemos actualizar
+router.put('/:id', (req, res) => {
+    const user = users.find(u => u.id === parseInt(req.params.id));
+    if (!user){
+        return res.status(404).json({error: 'Usuario no encontrado'});
+    }
+
+    const {nombre, edad} = req.body;
+    //actualizamos solo los campos que llegaron
+    if (nombre !== undefined) user.nombre = nombre;
+    if (edad !== undefined) user.edad = edad;
+    res.json(user);
+});
+
+router.delete('/:id', (req, res) => {
+    const index = users.findIndex(u => u.id === parseInt(req.params.id));
+    if (index === -1){
+        return res.status(404).json({error: 'usuario no encontrado'});
+    }
+    const eliminado = users.splice(index, 1)[0];
+    res.json({mensaje: 'Usuario eliminado', usuario: eliminado});
+});
+
+
+module.exports = router;
+ a13466bc64fc592ea6bf87cf9fae7c1cf57ff9ed
